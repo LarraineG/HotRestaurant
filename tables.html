@@ -14,7 +14,7 @@
 <body class="d-flex flex-column h-100">
     <div class="container">
         <div class="jumbotron text-center">
-            <h1 class="display-4"><i class="fas fa-pepper-hot mr-3"></i>Current Tables</h1>
+            <h1 class="display-4"><i class="fas fa-hamburger"></i>Current Tables<i class="fas fa-hotdog"></i></h1>
             <p class="lead ">See Usage of Tables and Current Waitlist</p>
             <hr class="my-4">
             <a class="btn btn-primary btn-lg" href="/reserve" role="button"><i class="fas fa-utensils mr-2"></i>Make Reservation</a>
@@ -38,7 +38,7 @@
                     <h5>Waitlist</h5>
                 </div>
                 <div class="card-body">
-                    <div id="#">
+                    <div id="resData">
         
                     </div>
                 </div>
@@ -63,5 +63,43 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $.get("/api/tables", function(data) {
+        console.log(data);
+        table = 0;
+        for(const d of data) {
+            table ++;
+            $("#tableData").append(
+                `<div class="card my-2">
+                    <div class="card-body">
+                        <h5 class="card-title">Table #${table}: ${d.name}</h5>
+                        <p class="card-subtitle text-muted"> ${d.id}</p>
+                        <div class="card-text">
+                            <p>${d.phone}</p>
+                            <p>${d.email}</p>
+                        </div>
+                    </div>
+                </div>`
+            )
+        }
+    });
 
+    $.get("/api/reservations", function(data) {
+        console.log(data);
+        for(const d of data) {
+            $("#resData").append(
+                `<div class="card my-2">
+                    <div class="card-body">
+                        <h5 class="card-title">${d.name}</h5>
+                        <p class="card-subtitle text-muted"> ${d.id}</p>
+                        <div class="card-text">
+                            <p>${d.phone}</p>
+                            <p>${d.email}</p>
+                        </div>
+                    </div>
+                </div>`
+            )
+        }
+    });
+</script>
 </html>
