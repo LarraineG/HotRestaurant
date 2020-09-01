@@ -27,8 +27,28 @@ app.use(express.json());
 ]
 // Create Tables
 // Front-End Routes
+app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, "home.html"));
+  });
+
+app.get("/reserve", function(req, res) {
+    res.sendFile(path.join(__dirname, "reserve.html"));
+  });
+
+app.get("/tables", function(req, res) {
+    res.sendFile(path.join(__dirname, "tables.html"));
+  });
 // API Routes
+app.get("/api/reservation", function (req, res) {
+    res.json(reservation);
+});
+
+app.get("/api/tables", function (req, res) {
+    res.json(tables);
+});
+
 // POST Call
+
 // Server Listen
 app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
